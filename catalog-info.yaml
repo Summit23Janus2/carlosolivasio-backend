@@ -1,0 +1,67 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: carlosolivasio-carlosolivasio-poi-backend-app-dev
+  annotations:
+    argocd/app-name: carlosolivasio-carlosolivasio-poi-backend-app-dev
+    backstage.io/kubernetes-id: carlosolivasio-carlosolivasio-poi-backend-app-dev
+    backstage.io/kubernetes-namespace: carlosolivasio
+    backstage.io/kubernetes-label-selector: 'app.kubernetes.io/instance=carlosolivasio-carlosolivasio-poi-backend-app-dev'
+    backstage.io/techdocs-ref: dir:.
+    github.com/project-slug: Summit23Janus2/carlosolivasio-backend
+    janus-idp.io/tekton-enabled: 'true'
+  tags:
+    - java
+    - quarkus
+    - maven
+    - workshop
+  links:
+    - url: https://console-openshift-console.apps.summit23blues.6mbu.p1.openshiftapps.com/dev-pipelines/ns/carlosolivasio/
+      title: Pipelines
+      icon: web
+    - url: https://console-openshift-console.apps.summit23blues.6mbu.p1.openshiftapps.com/k8s/ns/carlosolivasio/deployments/carlosolivasio-poi-backend-app
+      title: Deployment
+      icon: web
+    - url: https://devspaces.apps.summit23blues.6mbu.p1.openshiftapps.com/#https://github.com/Summit23Janus2/carlosolivasio-backend?che-editor=che-incubator/che-code/latest&devfilePath=.devfile-vscode.yaml
+      title: OpenShift Dev Spaces (VS Code)
+      icon: web
+spec:
+  type: service
+  lifecycle: production
+  owner: "user:default/carlosolivasio"
+  system: workshop-system-carlosolivasio
+  providesApis:
+    - backend-api-carlosolivasio
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: workshop-system-carlosolivasio
+  tags:
+    - backstage
+    - janus-idp
+    - openshift
+    - workshop
+    - rh-summit
+spec:
+  owner: "user:default/carlosolivasio"
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: backend-api-carlosolivasio
+  description: API surface used by workshop attendees to initialize and load parks data
+  links:
+    - url: http://carlosolivasio-poi-backend-app-carlosolivasio.apps.summit23blues.6mbu.p1.openshiftapps.com/q/swagger-ui
+      title: Swagger UI
+      icon: web
+    - url: https://github.com/Summit23Janus2/carlosolivasio-backend/tree/main/src/main/resources/META-INF/openapi.yaml
+      title: API Spec
+      icon: code
+spec:
+  type: openapi
+  lifecycle: production
+  owner: "user:default/carlosolivasio"
+  system: workshop-system-carlosolivasio
+  definition:
+    $text: https://github.com/Summit23Janus2/carlosolivasio-backend/tree/main/src/main/resources/META-INF/openapi.yaml
